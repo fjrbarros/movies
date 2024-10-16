@@ -19,7 +19,12 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "types": ["@testing-library/jest-dom"]
+    "types": ["@testing-library/jest-dom"],
+    "baseUrl": "src",
+    "paths": {
+      "@pages": ["pages/index.ts"],
+      "@routes": ["routes/index.ts"]
+    }
   },
   "include": ["src"]
 }

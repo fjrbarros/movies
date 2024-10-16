@@ -15,6 +15,8 @@ export default {
   moduleNameMapper: {
     "\\.(gif|ttf|eot|svg|png|webp)$": "<rootDir>/.jest/fileMock.js",
     "\\.(css|less|sass|scss)$": "identity-obj-proxy",
+    "@pages": "<rootDir>/src/pages",
+    "@routes": "<rootDir>/src/routes",
   },
   coverageThreshold: {
     global: {
