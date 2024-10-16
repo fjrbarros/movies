@@ -8,6 +8,9 @@ export default defineConfig({
     alias: {
       "@pages": "/src/pages",
       "@routes": "/src/routes",
+      "@components": "/src/components",
+      "@constants": "/src/constants",
+      "@providers": "/src/providers",
     },
   },
 });

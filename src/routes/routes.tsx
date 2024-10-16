@@ -1,3 +1,4 @@
+import { homePath, moviesPath, notFoundPath } from "@constants";
 import { type ComponentType, Suspense } from "react";
 import { Home, Movies, NotFound } from "./lazyPages";
 
@@ -5,10 +6,6 @@ interface IPages {
   path: string;
   component: ComponentType;
 }
-
-const homePath = "/";
-const moviesPath = "/movies";
-const notFoundPath = "*";
 
 const pages: IPages[] = [
   { path: homePath, component: Home },

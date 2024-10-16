@@ -17,6 +17,9 @@ export default {
     "\\.(css|less|sass|scss)$": "identity-obj-proxy",
     "@pages": "<rootDir>/src/pages",
     "@routes": "<rootDir>/src/routes",
+    "@components": "<rootDir>/src/components",
+    "@constants": "<rootDir>/src/constants",
+    "@providers": "<rootDir>/src/providers",
   },
   coverageThreshold: {
     global: {
