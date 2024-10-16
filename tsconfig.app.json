@@ -23,7 +23,10 @@
     "baseUrl": "src",
     "paths": {
       "@pages": ["pages/index.ts"],
-      "@routes": ["routes/index.ts"]
+      "@routes": ["routes/index.ts"],
+      "@components": ["components/index.ts"],
+      "@constants": ["constants/index.ts"],
+      "@providers": ["providers/index.ts"]
     }
   },
   "include": ["src"]
