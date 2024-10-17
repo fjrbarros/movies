@@ -21,6 +21,7 @@ export default {
     "@constants": "<rootDir>/src/constants",
     "@providers": "<rootDir>/src/providers",
     "@types": "<rootDir>/src/types",
+    "@utils": "<rootDir>/src/utils",
   },
   coverageThreshold: {
     global: {
