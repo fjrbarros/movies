@@ -22,6 +22,7 @@ export default {
     "@providers": "<rootDir>/src/providers",
     "@types": "<rootDir>/src/types",
     "@utils": "<rootDir>/src/utils",
+    "@hooks": "<rootDir>/src/hooks",
   },
   coverageThreshold: {
     global: {
