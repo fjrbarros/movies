@@ -26,7 +26,8 @@
       "@routes": ["routes/index.ts"],
       "@components": ["components/index.ts"],
       "@constants": ["constants/index.ts"],
-      "@providers": ["providers/index.ts"]
+      "@providers": ["providers/index.ts"],
+      "@types": ["types/index.ts"]
     }
   },
   "include": ["src"]

@@ -11,6 +11,7 @@ export default defineConfig({
       "@components": "/src/components",
       "@constants": "/src/constants",
       "@providers": "/src/providers",
+      "@types": "/src/types",
     },
   },
 });

@@ -20,6 +20,7 @@ export default {
     "@components": "<rootDir>/src/components",
     "@constants": "<rootDir>/src/constants",
     "@providers": "<rootDir>/src/providers",
+    "@types": "<rootDir>/src/types",
   },
   coverageThreshold: {
     global: {
