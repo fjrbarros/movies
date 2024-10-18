@@ -1,4 +1,5 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
+import { customRenderRTL } from "@utils";
 import { RouterProvider, createMemoryRouter } from "react-router-dom";
 import { routersConfig } from "./routes";
 
@@ -8,11 +9,16 @@ describe("routers", () => {
       initialEntries: ["/"],
     });
 
-    render(<RouterProvider router={router} />);
+    customRenderRTL(<RouterProvider router={router} />);
 
-    await waitFor(() => {
-      expect(screen.getByText(/home/i)).toBeInTheDocument();
-    });
+    await waitFor(
+      () => {
+        expect(screen.getAllByText(/home/i)).toHaveLength(3);
+      },
+      {
+        timeout: 5000,
+      },
+    );
   });
 
   it("should render movies page when router is /movies", async () => {
@@ -20,10 +26,10 @@ describe("routers", () => {
       initialEntries: ["/movies"],
     });
 
-    render(<RouterProvider router={router} />);
+    customRenderRTL(<RouterProvider router={router} />);
 
     await waitFor(() => {
-      expect(screen.getByText(/movies/i)).toBeInTheDocument();
+      expect(screen.getAllByText(/movies/i)).toHaveLength(3);
     });
   });
 
@@ -32,7 +38,7 @@ describe("routers", () => {
       initialEntries: ["/not-found"],
     });
 
-    render(<RouterProvider router={router} />);
+    customRenderRTL(<RouterProvider router={router} />);
 
     await waitFor(() => {
       expect(screen.getByText(/not found/i)).toBeInTheDocument();
