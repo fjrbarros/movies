@@ -23,6 +23,7 @@ export default {
     "@types": "<rootDir>/src/types",
     "@utils": "<rootDir>/src/utils",
     "@hooks": "<rootDir>/src/hooks",
+    "@api": "<rootDir>/src/api",
   },
   coverageThreshold: {
     global: {

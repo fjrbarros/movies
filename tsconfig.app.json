@@ -29,7 +29,8 @@
       "@providers": ["providers/index.ts"],
       "@types": ["types/index.ts"],
       "@utils": ["utils/index.ts"],
-      "@hooks": ["hooks/index.ts"]
+      "@hooks": ["hooks/index.ts"],
+      "@api": ["api/index.ts"]
     }
   },
   "include": ["src"]

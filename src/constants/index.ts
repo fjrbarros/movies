@@ -20,3 +20,5 @@ export const errorPage = {
     "Check that the URL is correct or click the button below to return",
   button: "Home page",
 };
+
+export const API_BASE_URL = "https://tools.outsera.com/backend-java/api/movies";
