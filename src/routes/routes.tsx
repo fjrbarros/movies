@@ -1,3 +1,4 @@
+import { PageLoading } from "@components";
 import { homePath, moviesPath, notFoundPath } from "@constants";
 import { type ComponentType, Suspense } from "react";
 import { Home, Movies, NotFound } from "./lazyPages";
@@ -16,7 +17,7 @@ const pages: IPages[] = [
 export const routersConfig = pages.map(({ path, component: Component }) => ({
   path,
   element: (
-    <Suspense fallback={"Loading..."}>
+    <Suspense fallback={<PageLoading />}>
       <Component />
     </Suspense>
   ),
