@@ -22,3 +22,4 @@ export const errorPage = {
 };
 
 export const API_BASE_URL = "https://tools.outsera.com/backend-java/api/movies";
+export const GET_MULTIPLE_WINNERS_KEY = "multiple_winners";
