@@ -1,6 +1,6 @@
 import { PageLoading } from "@components";
 import { homePath, moviesPath, notFoundPath } from "@constants";
-import { ThemeProvider } from "@providers";
+import { QueryClientProvider, ThemeProvider } from "@providers";
 import { type ComponentType, Suspense } from "react";
 import { Home, Movies, NotFound } from "./lazyPages";
 
@@ -19,9 +19,11 @@ export const routersConfig = pages.map(({ path, component: Component }) => ({
   path,
   element: (
     <Suspense fallback={<PageLoading />}>
-      <ThemeProvider>
-        <Component />
-      </ThemeProvider>
+      <QueryClientProvider>
+        <ThemeProvider>
+          <Component />
+        </ThemeProvider>
+      </QueryClientProvider>
     </Suspense>
   ),
 }));
