@@ -1,6 +1,7 @@
-import { useModules } from "@hooks";
+import { localStorageKeys } from "@constants";
+import { useLocalStorage, useModules } from "@hooks";
 import type { IModule } from "@types";
-import { type PropsWithChildren, useState } from "react";
+import type { PropsWithChildren } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppHeader } from "../appHeader/AppHeader";
 import { Drawer } from "../drawer/Drawer";
@@ -12,8 +13,11 @@ interface PageWrapperProps extends PropsWithChildren {
 
 export const PageWrapper = ({ children, pageTitle }: PageWrapperProps) => {
   const navigate = useNavigate();
-  const [drawerOpen, setDrawerOpen] = useState(false);
   const { modules } = useModules();
+  const [drawerOpen, setDrawerOpen] = useLocalStorage(
+    localStorageKeys.drawer,
+    false,
+  );
 
   const handleToggleDrawer = () => {
     setDrawerOpen(!drawerOpen);

@@ -6,3 +6,9 @@ export const homePageName = "Home";
 export const moviesPageName = "Movies";
 
 export const drawerWidth = 240;
+
+const systemName = "movies-system";
+
+export const localStorageKeys = {
+  drawer: `${systemName}-drawer`,
+};

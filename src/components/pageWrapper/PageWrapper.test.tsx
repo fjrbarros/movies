@@ -1,7 +1,7 @@
 import { homePageName, homePath } from "@constants";
+import { useLocalStorage } from "@hooks";
 import { fireEvent, screen } from "@testing-library/react";
 import { customRenderRTL } from "@utils";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PageWrapper } from "./PageWrapper";
 
@@ -34,7 +34,10 @@ const setDrawerOpen = jest.fn();
 
 describe("PageWrapper", () => {
   beforeEach(() => {
-    (useState as jest.Mock).mockReturnValue([false, setDrawerOpen]);
+    (useLocalStorage as jest.Mock).mockImplementationOnce(() => [
+      false,
+      setDrawerOpen,
+    ]);
   });
 
   afterEach(() => {
