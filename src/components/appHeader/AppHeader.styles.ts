@@ -18,7 +18,7 @@ interface IconButtonProps extends MuiIconButtonProps {
 export const IconButton = styled(MuiIconButton)<IconButtonProps>(
   ({ open, theme }) => ({
     mr: 2,
-    ...(open && !theme.isSmallScreen && { opacity: 0, pointerEvents: "none" }),
+    ...(open && !theme.isSmallScreen && { display: "none" }),
   }),
 );
 
