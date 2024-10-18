@@ -28,7 +28,7 @@ export const ThemeProvider = ({ children }: PropsWithChildren) => {
   };
 
   return (
-    <MuiThemeProvider theme={createTheme()}>
+    <MuiThemeProvider theme={theme}>
       <CssBaseline />
       {children}
     </MuiThemeProvider>
