@@ -1,4 +1,3 @@
-import { ThemeProvider } from "@providers";
 import { routersConfig } from "@routes";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
@@ -12,8 +11,6 @@ if (!rootElement) {
 
 createRoot(rootElement).render(
   <StrictMode>
-    <ThemeProvider>
-      <RouterProvider router={createBrowserRouter(routersConfig)} />
-    </ThemeProvider>
+    <RouterProvider router={createBrowserRouter(routersConfig)} />
   </StrictMode>,
 );
