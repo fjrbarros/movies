@@ -1,1 +1,1 @@
-export * from "./customRenderRTL/customRenderRTL";
+export * from "./testUtils/testUtils";
