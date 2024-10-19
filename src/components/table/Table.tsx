@@ -4,7 +4,6 @@ import {
   type SxProps,
   type Theme,
 } from "@mui/material";
-import Paper from "@mui/material/Paper";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
@@ -19,7 +18,7 @@ import { NoDataWrapper } from "./sub-components/NoDataWrapper";
 interface TableProps<T> {
   columns: ITableColumn[];
   data: T[];
-  onFilterChange: (filters: { [key: string]: string }) => void;
+  onFilterChange?: (filters: { [key: string]: string }) => void;
   isLoading?: boolean;
   loadingMessage?: string;
   emptyMessage?: string;
@@ -43,7 +42,7 @@ export const Table = <T,>({
       [columnId]: value,
     };
     setFilters(newFilters);
-    onFilterChange(newFilters);
+    onFilterChange?.(newFilters);
   };
 
   const renderTableBody = () => {
@@ -71,14 +70,14 @@ export const Table = <T,>({
   };
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer>
       <MuiTable sx={sx}>
-        <TableHead>
+        <TableHead sx={{ background: "#f9f9f9" }}>
           <TableRow>
             {columns.map((column) => (
               <TableCell
                 key={column.id}
-                align={column.headerTextAlign || "center"}
+                align={column.headerTextAlign || "left"}
                 sx={column.sx}
               >
                 <Box display="flex" flexDirection="column">
