@@ -61,7 +61,11 @@ export const Table = <T,>({
     return data.map((row, index) => (
       <StyledTableRow key={`row-${index}`}>
         {columns.map((column) => (
-          <TableCell key={column.id} align={column.bodyTextAlign || "left"}>
+          <TableCell
+            key={column.id}
+            align={column.bodyTextAlign || "left"}
+            sx={column.sx}
+          >
             {String(row[column.id as keyof T])}
           </TableCell>
         ))}
