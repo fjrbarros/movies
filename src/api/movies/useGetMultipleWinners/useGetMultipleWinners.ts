@@ -1,6 +1,6 @@
 import { GET_MULTIPLE_WINNERS_KEY } from "@constants";
 import { useQuery } from "@tanstack/react-query";
-import { ApiService, type TParams } from "../../base";
+import { ApiService } from "../../base";
 
 interface YearData {
   year: number;
@@ -12,19 +12,21 @@ interface IResponseMultipleWinners {
 }
 
 export const useGetMultipleWinners = () => {
-  const apiService = new ApiService();
-  const params: TParams = { projection: "years-with-multiple-winners" };
+  const service = new ApiService();
+  const params = { projection: "years-with-multiple-winners" };
 
   const {
-    data = [],
+    data: response,
     isLoading,
     isError,
-  } = useQuery<IResponseMultipleWinners[], Error>({
+  } = useQuery<IResponseMultipleWinners, Error>({
     queryKey: [GET_MULTIPLE_WINNERS_KEY],
-    queryFn: () => {
-      return apiService.get<IResponseMultipleWinners[]>({ params });
+    queryFn: async () => {
+      return await service.get<IResponseMultipleWinners>({ params });
     },
   });
+
+  const data = response?.years ?? [];
 
   return { data, isLoading, isError };
 };
