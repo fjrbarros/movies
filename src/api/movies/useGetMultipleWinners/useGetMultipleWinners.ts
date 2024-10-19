@@ -21,9 +21,7 @@ export const useGetMultipleWinners = () => {
     isError,
   } = useQuery<IResponseMultipleWinners, Error>({
     queryKey: [GET_MULTIPLE_WINNERS_KEY],
-    queryFn: async () => {
-      return await service.get<IResponseMultipleWinners>({ params });
-    },
+    queryFn: () => service.get<IResponseMultipleWinners>({ params }),
   });
 
   const data = response?.years ?? [];
