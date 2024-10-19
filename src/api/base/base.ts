@@ -1,5 +1,5 @@
 import { API_BASE_URL } from "@constants";
-import type { GetRequestConfig } from "./base.types";
+import type { GetRequestConfig, TParams } from "./base.types";
 
 export class ApiService {
   private baseUrl: string;
@@ -8,7 +8,7 @@ export class ApiService {
     this.baseUrl = baseUrl;
   }
 
-  private buildQueryString(params: Record<string, string>): string {
+  private buildQueryString(params: TParams): string {
     const queryString = new URLSearchParams(params).toString();
     return queryString ? `?${queryString}` : "";
   }
