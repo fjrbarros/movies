@@ -4,7 +4,7 @@ import type { PropsWithChildren, ReactElement } from "react";
 import { ThemeProvider } from "../../providers/themeProvider/ThemeProvider";
 
 interface IMockFetch {
-  response?: Record<string, unknown>;
+  response?: unknown;
   ok?: boolean;
   status?: number;
 }
