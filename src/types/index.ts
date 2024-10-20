@@ -10,14 +10,17 @@ export interface IModule {
   isSelected?: boolean;
 }
 
+export type TInputType = "text" | "select" | "number";
+
 interface ISelectOption {
   label: string;
   value: string;
 }
 interface IFilter {
-  type?: "text" | "select" | "number";
+  type?: TInputType;
   placeholder: string;
   options?: ISelectOption[];
+  triggerOnEnter?: boolean;
 }
 
 export interface ITableColumn {
