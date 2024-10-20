@@ -1,4 +1,9 @@
 import {
+  DEFAULT_EMPTY_MESSAGE,
+  DEFAULT_ERROR_MESSAGE,
+  DEFAULT_LOADING_MESSAGE,
+} from "@constants";
+import {
   fireEvent,
   render,
   screen,
@@ -87,11 +92,10 @@ describe("Table", () => {
         data={[]}
         onFilterChange={() => {}}
         isLoading={true}
-        loadingMessage="Loading..."
       />,
     );
 
-    expect(screen.getByText("Loading...")).toBeInTheDocument();
+    expect(screen.getByText(DEFAULT_LOADING_MESSAGE)).toBeInTheDocument();
   });
 
   it("should display empty message when there is no data", () => {
@@ -101,11 +105,10 @@ describe("Table", () => {
         data={[]}
         onFilterChange={() => {}}
         isLoading={false}
-        emptyMessage="No data"
       />,
     );
 
-    expect(screen.getByText("No data")).toBeInTheDocument();
+    expect(screen.getByText(DEFAULT_EMPTY_MESSAGE)).toBeInTheDocument();
   });
 
   it("should display error message when isError is true", () => {
@@ -119,9 +122,7 @@ describe("Table", () => {
       />,
     );
 
-    expect(
-      screen.getByText("An error occurred while loading the data."),
-    ).toBeInTheDocument();
+    expect(screen.getByText(DEFAULT_ERROR_MESSAGE)).toBeInTheDocument();
   });
 
   it("should call onFilterChange when filter value changes with debounce", async () => {

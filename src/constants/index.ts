@@ -26,3 +26,8 @@ export const GET_MULTIPLE_WINNERS_KEY = "multiple_winners";
 export const GET_STUDIOS_WITH_WINNERS_KEY = "studios_with_winners";
 export const GET_WINNERS_BY_INTERVAL_KEY = "winners_by_interval";
 export const GET_MOVIES_WINNERS_KEY = "movies_winners";
+
+export const DEFAULT_LOADING_MESSAGE = "Loading data...";
+export const DEFAULT_ERROR_MESSAGE =
+  "An error occurred while loading the data.";
+export const DEFAULT_EMPTY_MESSAGE = "There is no data to display.";

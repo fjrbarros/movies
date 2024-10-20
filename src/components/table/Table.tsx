@@ -1,3 +1,8 @@
+import {
+  DEFAULT_EMPTY_MESSAGE,
+  DEFAULT_ERROR_MESSAGE,
+  DEFAULT_LOADING_MESSAGE,
+} from "@constants";
 import InfoIcon from "@mui/icons-material/Info";
 import ReportIcon from "@mui/icons-material/Report";
 import {
@@ -39,9 +44,9 @@ export const Table = <T,>({
   onFilterChange,
   isLoading = false,
   isError = false,
-  loadingMessage = "Loading data...",
-  errorMessage = "An error occurred while loading the data.",
-  emptyMessage = "There is no data to display.",
+  loadingMessage = DEFAULT_LOADING_MESSAGE,
+  errorMessage = DEFAULT_ERROR_MESSAGE,
+  emptyMessage = DEFAULT_EMPTY_MESSAGE,
   sx,
 }: TableProps<T>) => {
   const [filters, setFilters] = useState<{ [key: string]: string }>({});
