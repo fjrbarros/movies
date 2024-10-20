@@ -10,9 +10,14 @@ export interface IModule {
   isSelected?: boolean;
 }
 
+interface ISelectOption {
+  label: string;
+  value: string;
+}
 interface IFilter {
-  type?: "text" | "number";
+  type?: "text" | "select" | "number";
   placeholder: string;
+  options?: ISelectOption[];
 }
 
 export interface ITableColumn {
