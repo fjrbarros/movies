@@ -3,7 +3,7 @@ import type { PropsWithChildren } from "react";
 
 interface INoDataWrapperProps extends PropsWithChildren {
   colSpan: number;
-  messateType?: "loading" | "empty";
+  messateType?: "loading" | "empty" | "error";
 }
 
 export const NoDataWrapper = ({

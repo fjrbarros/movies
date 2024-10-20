@@ -1,4 +1,5 @@
 import InfoIcon from "@mui/icons-material/Info";
+import ReportIcon from "@mui/icons-material/Report";
 import {
   Box,
   Table as MuiTable,
@@ -37,7 +38,9 @@ export const Table = <T,>({
   data,
   onFilterChange,
   isLoading = false,
+  isError = false,
   loadingMessage = "Loading data...",
+  errorMessage = "An error occurred while loading the data.",
   emptyMessage = "There is no data to display.",
   sx,
 }: TableProps<T>) => {
@@ -53,18 +56,29 @@ export const Table = <T,>({
   };
 
   const renderTableBody = () => {
+    const colSpan = columns.length;
+
     if (isLoading) {
       return (
-        <NoDataWrapper colSpan={columns.length}>
+        <NoDataWrapper colSpan={colSpan}>
           {loadingMessage}
           <CircularProgress size={20} />
         </NoDataWrapper>
       );
     }
 
+    if (isError) {
+      return (
+        <NoDataWrapper messateType="error" colSpan={colSpan}>
+          <ReportIcon color="error" />
+          {errorMessage}
+        </NoDataWrapper>
+      );
+    }
+
     if (!data.length) {
       return (
-        <NoDataWrapper messateType="empty" colSpan={columns.length}>
+        <NoDataWrapper messateType="empty" colSpan={colSpan}>
           <InfoIcon color="info" />
           {emptyMessage}
         </NoDataWrapper>

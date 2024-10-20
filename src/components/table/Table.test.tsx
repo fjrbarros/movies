@@ -108,6 +108,22 @@ describe("Table", () => {
     expect(screen.getByText("No data")).toBeInTheDocument();
   });
 
+  it("should display error message when isError is true", () => {
+    render(
+      <Table
+        columns={columns}
+        data={[]}
+        onFilterChange={() => {}}
+        isLoading={false}
+        isError={true}
+      />,
+    );
+
+    expect(
+      screen.getByText("An error occurred while loading the data."),
+    ).toBeInTheDocument();
+  });
+
   it("should call onFilterChange when filter value changes with debounce", async () => {
     const mockOnFilterChange = jest.fn();
 
