@@ -1,9 +1,11 @@
+import InfoIcon from "@mui/icons-material/Info";
 import {
   Box,
   Table as MuiTable,
   type SxProps,
   type Theme,
 } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
@@ -23,7 +25,9 @@ interface TableProps<T> {
     inputType?: TInputType,
   ) => void;
   isLoading?: boolean;
+  isError?: boolean;
   loadingMessage?: string;
+  errorMessage?: string;
   emptyMessage?: string;
   sx?: SxProps<Theme>;
 }
@@ -33,8 +37,8 @@ export const Table = <T,>({
   data,
   onFilterChange,
   isLoading = false,
-  loadingMessage = "Loading...",
-  emptyMessage = "No data",
+  loadingMessage = "Loading data...",
+  emptyMessage = "There is no data to display.",
   sx,
 }: TableProps<T>) => {
   const [filters, setFilters] = useState<{ [key: string]: string }>({});
@@ -51,13 +55,19 @@ export const Table = <T,>({
   const renderTableBody = () => {
     if (isLoading) {
       return (
-        <NoDataWrapper colSpan={columns.length}>{loadingMessage}</NoDataWrapper>
+        <NoDataWrapper colSpan={columns.length}>
+          {loadingMessage}
+          <CircularProgress size={20} />
+        </NoDataWrapper>
       );
     }
 
     if (!data.length) {
       return (
-        <NoDataWrapper colSpan={columns.length}>{emptyMessage}</NoDataWrapper>
+        <NoDataWrapper messateType="empty" colSpan={columns.length}>
+          <InfoIcon color="info" />
+          {emptyMessage}
+        </NoDataWrapper>
       );
     }
 
