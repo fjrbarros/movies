@@ -1,21 +1,39 @@
 import ClearIcon from "@mui/icons-material/Clear";
-import { IconButton, InputAdornment, type TextFieldProps } from "@mui/material";
+import InfoIcon from "@mui/icons-material/Info";
+import {
+  Box,
+  IconButton,
+  InputAdornment,
+  type TextFieldProps,
+  Tooltip,
+} from "@mui/material";
 import * as Styles from "./SearchInput.styles";
 
 type InputProps = TextFieldProps & {
-  onCLickClear?: () => void;
+  onClickClear?: () => void;
+  tooltipText?: string;
 };
 
 export const SearchInput = ({
   label,
   value,
   onChange,
-  onCLickClear,
+  onClickClear,
+  tooltipText,
   ...rest
 }: InputProps) => {
   return (
     <Styles.TextField
-      label={label}
+      label={
+        <Box display="flex" alignItems="center" gap="5px">
+          {label}
+          {!!tooltipText && (
+            <Tooltip title={tooltipText} arrow>
+              <InfoIcon sx={{ width: "19px", height: "19px" }} />
+            </Tooltip>
+          )}
+        </Box>
+      }
       value={value}
       onChange={onChange}
       {...rest}
@@ -26,7 +44,7 @@ export const SearchInput = ({
               <IconButton
                 aria-label="clear value"
                 size="medium"
-                onClick={onCLickClear}
+                onClick={onClickClear}
               >
                 <ClearIcon fontSize="inherit" />
               </IconButton>

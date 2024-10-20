@@ -1,4 +1,5 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
+import { act } from "react";
 import { SearchInput } from "./SearchInput";
 
 describe("SearchInput", () => {
@@ -41,12 +42,42 @@ describe("SearchInput", () => {
         label="Search"
         value="test value"
         onChange={() => {}}
-        onCLickClear={handleClear}
+        onClickClear={handleClear}
       />,
     );
 
     fireEvent.click(screen.getByLabelText("clear value"));
 
     expect(handleClear).toHaveBeenCalledTimes(1);
+  });
+
+  it("should renders the tooltip when tooltipText is passed", async () => {
+    render(
+      <SearchInput
+        label="Search"
+        value=""
+        onChange={() => {}}
+        tooltipText="Tooltip text"
+      />,
+    );
+
+    const group = screen.getByRole("group", {
+      hidden: true,
+    });
+
+    const infoIcon = within(group).getByTestId("InfoIcon");
+
+    act(() => {
+      fireEvent(
+        infoIcon,
+        new MouseEvent("mouseover", {
+          bubbles: true,
+        }),
+      );
+    });
+
+    const tooltipText = await screen.findByText("Tooltip text");
+
+    expect(tooltipText).toBeInTheDocument();
   });
 });
