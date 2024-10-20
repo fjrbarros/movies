@@ -54,7 +54,7 @@ describe("Movies Component", () => {
 
     customRenderRTL(<Movies />);
 
-    expect(screen.getByText("Loading...")).toBeInTheDocument();
+    expect(screen.getByText("Loading data...")).toBeInTheDocument();
   });
 
   it("should display data in the table", () => {

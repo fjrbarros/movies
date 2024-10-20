@@ -46,7 +46,7 @@ describe("MultipleWinnersCard", () => {
 
     render(<MultipleWinnersCard />);
 
-    expect(screen.getByText("Loading...")).toBeInTheDocument();
+    expect(screen.getByText("Loading data...")).toBeInTheDocument();
   });
 
   it("should passes data prop to Table", () => {

@@ -54,7 +54,7 @@ const data = [
   { name: "Eclair", calories: 262, fat: 16.0, carbs: 24, protein: 6.0 },
 ];
 
-describe("Table Component", () => {
+describe("Table", () => {
   it("should render table headers correctly", () => {
     render(<Table columns={columns} data={data} onFilterChange={() => {}} />);
 

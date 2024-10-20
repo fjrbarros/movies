@@ -98,6 +98,6 @@ describe("ProducersWithIntervalCard", () => {
 
     render(<ProducersWithIntervalCard />);
 
-    expect(screen.queryAllByText("Loading...")).toHaveLength(2);
+    expect(screen.queryAllByText("Loading data...")).toHaveLength(2);
   });
 });

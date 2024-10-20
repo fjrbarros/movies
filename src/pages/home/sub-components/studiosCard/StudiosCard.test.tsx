@@ -44,6 +44,6 @@ describe("StudiosCard", () => {
 
     render(<StudiosCard />);
 
-    expect(screen.getByText("Loading...")).toBeInTheDocument();
+    expect(screen.getByText("Loading data...")).toBeInTheDocument();
   });
 });

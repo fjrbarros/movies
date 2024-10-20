@@ -59,7 +59,7 @@ describe("MovieWinnersCard", () => {
 
     render(<MovieWinnersCard />);
 
-    expect(screen.getByRole("progressbar")).toBeInTheDocument();
+    expect(screen.getAllByRole("progressbar")).toHaveLength(2);
   });
 
   it("should renders data in Table component", () => {
