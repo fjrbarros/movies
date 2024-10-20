@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { BaseCard } from "../baseCard/BaseCard";
 
 export const MultipleWinnersCard = () => {
-  const { data, isLoading } = useGetMultipleWinners();
+  const { data, isLoading, isError } = useGetMultipleWinners();
 
   const columns: ITableColumn[] = useMemo(
     () => [
@@ -18,7 +18,12 @@ export const MultipleWinnersCard = () => {
   return (
     <BaseCard>
       <BaseCard.Title label="List years with multiple winners" />
-      <Table columns={columns} data={data} isLoading={isLoading} />
+      <Table
+        columns={columns}
+        data={data}
+        isLoading={isLoading}
+        isError={isError}
+      />
     </BaseCard>
   );
 };

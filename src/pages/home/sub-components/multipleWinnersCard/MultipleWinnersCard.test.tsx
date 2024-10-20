@@ -1,4 +1,5 @@
 import { useGetMultipleWinners } from "@api";
+import { DEFAULT_ERROR_MESSAGE } from "@constants";
 import { render, screen } from "@testing-library/react";
 import { MultipleWinnersCard } from "./MultipleWinnersCard";
 
@@ -6,12 +7,11 @@ jest.mock("@api", () => ({
   useGetMultipleWinners: jest.fn(),
 }));
 
+const defautResponse = { data: [], isLoading: false, isError: false };
+
 describe("MultipleWinnersCard", () => {
   it("should renders BaseCard and BaseCard.Title correctly", () => {
-    (useGetMultipleWinners as jest.Mock).mockReturnValue({
-      data: [],
-      isLoading: false,
-    });
+    (useGetMultipleWinners as jest.Mock).mockReturnValue(defautResponse);
 
     render(<MultipleWinnersCard />);
 
@@ -21,10 +21,7 @@ describe("MultipleWinnersCard", () => {
   });
 
   it("should renders Table with correct columns", () => {
-    (useGetMultipleWinners as jest.Mock).mockReturnValue({
-      data: [],
-      isLoading: false,
-    });
+    (useGetMultipleWinners as jest.Mock).mockReturnValue(defautResponse);
 
     render(<MultipleWinnersCard />);
 
@@ -40,7 +37,7 @@ describe("MultipleWinnersCard", () => {
 
   it("should passes isLoading prop to Table", () => {
     (useGetMultipleWinners as jest.Mock).mockReturnValue({
-      data: [],
+      ...defautResponse,
       isLoading: true,
     });
 
@@ -55,8 +52,8 @@ describe("MultipleWinnersCard", () => {
       { year: 2021, winnerCount: 3 },
     ];
     (useGetMultipleWinners as jest.Mock).mockReturnValue({
+      ...defautResponse,
       data: mockData,
-      isLoading: false,
     });
 
     render(<MultipleWinnersCard />);
@@ -65,5 +62,16 @@ describe("MultipleWinnersCard", () => {
       expect(screen.getByText(row.year.toString())).toBeInTheDocument();
       expect(screen.getByText(row.winnerCount.toString())).toBeInTheDocument();
     }
+  });
+
+  it("should passes isError prop to Table", () => {
+    (useGetMultipleWinners as jest.Mock).mockReturnValue({
+      ...defautResponse,
+      isError: true,
+    });
+
+    render(<MultipleWinnersCard />);
+
+    expect(screen.getByText(DEFAULT_ERROR_MESSAGE)).toBeInTheDocument();
   });
 });
