@@ -35,7 +35,7 @@ export const Input = ({ label, onSearch, isLoading, ...rest }: InputProps) => {
         label={label}
         value={inputValue}
         onChange={(event) => setInputValue(event.target.value)}
-        onCLickClear={handleClear}
+        onClickClear={handleClear}
         {...rest}
       />
       <Button

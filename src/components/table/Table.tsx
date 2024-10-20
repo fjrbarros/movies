@@ -9,16 +9,19 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import TextField from "@mui/material/TextField";
-import type { ITableColumn } from "@types";
+import type { ITableColumn, TInputType } from "@types";
 import { useState } from "react";
 import { StyledTableRow } from "./Table.styles";
+import { InputFilter } from "./sub-components/InputFilters";
 import { NoDataWrapper } from "./sub-components/NoDataWrapper";
 
 interface TableProps<T> {
   columns: ITableColumn[];
   data: T[];
-  onFilterChange?: (filters: { [key: string]: string }) => void;
+  onFilterChange?: (
+    filters: { [key: string]: string },
+    inputType?: TInputType,
+  ) => void;
   isLoading?: boolean;
   loadingMessage?: string;
   emptyMessage?: string;
@@ -87,15 +90,19 @@ export const Table = <T,>({
                 <Box display="flex" flexDirection="column">
                   {column.label}
                   {column.filter && (
-                    <TextField
+                    <InputFilter
                       value={filters[column.id] ?? ""}
-                      onChange={(e) =>
-                        handleFilterChange(column.id, e.target.value)
+                      onChange={(event) =>
+                        handleFilterChange(column.id, event as string)
                       }
-                      placeholder={column.filter.placeholder}
+                      label={column.filter.placeholder}
                       variant="standard"
-                      size="small"
+                      size="medium"
                       margin="dense"
+                      type={column.filter.type}
+                      options={column.filter.options}
+                      onClickClear={() => handleFilterChange(column.id, "")}
+                      triggerOnEnter={column.filter.triggerOnEnter}
                     />
                   )}
                 </Box>
