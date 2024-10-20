@@ -1,14 +1,6 @@
-import ClearIcon from "@mui/icons-material/Clear";
+import { SearchInput } from "@components";
 import SearchIcon from "@mui/icons-material/Search";
-import {
-  Box,
-  Button,
-  IconButton,
-  InputAdornment,
-  TextField,
-  type TextFieldProps,
-  styled,
-} from "@mui/material";
+import { Box, Button, type TextFieldProps } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useState } from "react";
 
@@ -16,21 +8,6 @@ type InputProps = TextFieldProps & {
   onSearch?: (value: string) => void;
   isLoading?: boolean;
 };
-
-const SearchField = styled(TextField)({
-  "input::-webkit-outer-spin-button": {
-    WebkitAppearance: "none",
-    margin: 0,
-  },
-  "input::-webkit-inner-spin-button": {
-    WebkitAppearance: "none",
-    margin: 0,
-  },
-
-  "input[type=number]": {
-    MozAppearance: "textfield",
-  },
-});
 
 export const Input = ({ label, onSearch, isLoading, ...rest }: InputProps) => {
   const [inputValue, setInputValue] = useState("");
@@ -54,26 +31,12 @@ export const Input = ({ label, onSearch, isLoading, ...rest }: InputProps) => {
       alignItems="center"
       onSubmit={handleSubmit}
     >
-      <SearchField
+      <SearchInput
         label={label}
         value={inputValue}
         onChange={(event) => setInputValue(event.target.value)}
+        onCLickClear={handleClear}
         {...rest}
-        slotProps={{
-          input: {
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="clear value"
-                  size="medium"
-                  onClick={handleClear}
-                >
-                  <ClearIcon fontSize="inherit" />
-                </IconButton>
-              </InputAdornment>
-            ),
-          },
-        }}
       />
       <Button
         type="submit"
