@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { BaseCard } from "../baseCard/BaseCard";
 
 export const ProducersWithIntervalCard = () => {
-  const { data, isLoading } = useGetProducersWithInterval();
+  const { data, isLoading, isError } = useGetProducersWithInterval();
 
   const columns: ITableColumn[] = useMemo(
     () => [
@@ -33,9 +33,19 @@ export const ProducersWithIntervalCard = () => {
     <BaseCard>
       <BaseCard.Title label="Producers with longest and shortest interval between wins" />
       <BaseCard.SubTitle label="Maximum" />
-      <Table columns={columns} data={data.max} isLoading={isLoading} />
+      <Table
+        columns={columns}
+        data={data.max}
+        isLoading={isLoading}
+        isError={isError}
+      />
       <BaseCard.SubTitle label="Minimum" marginTop="10px" />
-      <Table columns={columns} data={data.min} isLoading={isLoading} />
+      <Table
+        columns={columns}
+        data={data.min}
+        isLoading={isLoading}
+        isError={isError}
+      />
     </BaseCard>
   );
 };

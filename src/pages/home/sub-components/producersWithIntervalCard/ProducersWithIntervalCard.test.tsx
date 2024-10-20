@@ -1,10 +1,17 @@
 import { useGetProducersWithInterval } from "@api";
+import { DEFAULT_ERROR_MESSAGE, DEFAULT_LOADING_MESSAGE } from "@constants";
 import { render, screen } from "@testing-library/react";
 import { ProducersWithIntervalCard } from "./ProducersWithIntervalCard";
 
 jest.mock("@api", () => ({
   useGetProducersWithInterval: jest.fn(),
 }));
+
+const defautResponse = {
+  data: { min: [], max: [] },
+  isLoading: false,
+  isError: false,
+};
 
 const mockData = {
   min: [
@@ -27,10 +34,7 @@ const mockData = {
 
 describe("ProducersWithIntervalCard", () => {
   it("should renders BaseCard.Title and BaseCard.SubTitle component with correct label", () => {
-    (useGetProducersWithInterval as jest.Mock).mockReturnValue({
-      data: { min: [], max: [] },
-      isLoading: false,
-    });
+    (useGetProducersWithInterval as jest.Mock).mockReturnValue(defautResponse);
 
     render(<ProducersWithIntervalCard />);
 
@@ -44,10 +48,7 @@ describe("ProducersWithIntervalCard", () => {
   });
 
   it("should renders Table component with correct columns", () => {
-    (useGetProducersWithInterval as jest.Mock).mockReturnValue({
-      data: { min: [], max: [] },
-      isLoading: false,
-    });
+    (useGetProducersWithInterval as jest.Mock).mockReturnValue(defautResponse);
 
     render(<ProducersWithIntervalCard />);
 
@@ -74,8 +75,8 @@ describe("ProducersWithIntervalCard", () => {
 
   it("should renders with correct data", () => {
     (useGetProducersWithInterval as jest.Mock).mockReturnValue({
+      ...defautResponse,
       data: mockData,
-      isLoading: false,
     });
 
     render(<ProducersWithIntervalCard />);
@@ -92,12 +93,23 @@ describe("ProducersWithIntervalCard", () => {
 
   it("should passes isLoading prop to Table component", () => {
     (useGetProducersWithInterval as jest.Mock).mockReturnValue({
-      data: { min: [], max: [] },
+      ...defautResponse,
       isLoading: true,
     });
 
     render(<ProducersWithIntervalCard />);
 
-    expect(screen.queryAllByText("Loading data...")).toHaveLength(2);
+    expect(screen.queryAllByText(DEFAULT_LOADING_MESSAGE)).toHaveLength(2);
+  });
+
+  it("should passes isError prop to Table component", () => {
+    (useGetProducersWithInterval as jest.Mock).mockReturnValue({
+      ...defautResponse,
+      isError: true,
+    });
+
+    render(<ProducersWithIntervalCard />);
+
+    expect(screen.queryAllByText(DEFAULT_ERROR_MESSAGE)).toHaveLength(2);
   });
 });
