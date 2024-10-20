@@ -6,7 +6,7 @@ import { BaseCard } from "../baseCard/BaseCard";
 
 export const MovieWinnersCard = () => {
   const [year, setYear] = useState("");
-  const { data, isLoading } = useGetMoviesWinners(year);
+  const { data, isLoading, isError } = useGetMoviesWinners(year);
 
   const columns: ITableColumn[] = useMemo(
     () => [
@@ -29,7 +29,12 @@ export const MovieWinnersCard = () => {
         fullWidth
         isLoading={isLoading}
       />
-      <Table columns={columns} data={data} isLoading={isLoading} />
+      <Table
+        columns={columns}
+        data={data}
+        isLoading={isLoading}
+        isError={isError}
+      />
     </BaseCard>
   );
 };
