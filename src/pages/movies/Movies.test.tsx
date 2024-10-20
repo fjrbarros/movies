@@ -1,4 +1,5 @@
 import { useGetListMovies } from "@api";
+import { DEFAULT_ERROR_MESSAGE, DEFAULT_LOADING_MESSAGE } from "@constants";
 import { fireEvent, screen, waitFor, within } from "@testing-library/react";
 import { customRenderRTL } from "@utils";
 import { Movies } from "./Movies";
@@ -22,7 +23,7 @@ const defaultResponse = {
   isError: false,
 };
 
-describe("Movies Component", () => {
+describe("Movies", () => {
   beforeEach(() => {
     mockUseGetListMovies.mockClear();
   });
@@ -54,7 +55,18 @@ describe("Movies Component", () => {
 
     customRenderRTL(<Movies />);
 
-    expect(screen.getByText("Loading data...")).toBeInTheDocument();
+    expect(screen.getByText(DEFAULT_LOADING_MESSAGE)).toBeInTheDocument();
+  });
+
+  it("should display error state when data is failed to load", () => {
+    mockUseGetListMovies.mockReturnValue({
+      ...defaultResponse,
+      isError: true,
+    });
+
+    customRenderRTL(<Movies />);
+
+    expect(screen.getByText(DEFAULT_ERROR_MESSAGE)).toBeInTheDocument();
   });
 
   it("should display data in the table", () => {

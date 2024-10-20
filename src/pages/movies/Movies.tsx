@@ -12,8 +12,7 @@ interface IFilter {
 
 export const Movies = () => {
   const [filters, setFilters] = useState<IFilter>({ year: "", winner: "" });
-
-  const { data, isLoading } = useGetListMovies({
+  const { data, isLoading, isError } = useGetListMovies({
     page: 0,
     size: 999,
     ...filters,
@@ -80,6 +79,7 @@ export const Movies = () => {
         data={data.content}
         columns={columns}
         isLoading={isLoading}
+        isError={isError}
         onFilterChange={(value) =>
           handleFilterChange(value as unknown as IFilter)
         }
