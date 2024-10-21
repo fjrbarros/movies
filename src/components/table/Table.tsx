@@ -44,7 +44,7 @@ interface TableProps<T> {
   page?: number;
   pageSize?: number;
   rowsPerPageList?: number[];
-  count: number;
+  count?: number;
   showPagination?: boolean;
 }
 
@@ -61,7 +61,7 @@ export const Table = <T,>({
   page: pageProp = FIRST_PAGE,
   pageSize = DEFAULT_PAGE_SIZE,
   rowsPerPageList = DEFAULT_ROWS_PER_PAGE,
-  count,
+  count = 0,
   onPageChange,
   showPagination = false,
 }: TableProps<T>) => {
