@@ -44,12 +44,13 @@ export const Movies = () => {
       {
         id: "year",
         label: "Year",
+        ...commonColumnProps,
+        sx: { ...commonColumnProps.sx, minWidth: "200px" },
         filter: {
           type: "number",
           placeholder: "Filter by year",
           triggerOnEnter: true,
         },
-        ...commonColumnProps,
       },
       {
         id: "title",
