@@ -1,6 +1,6 @@
 import { useGetListMovies } from "@api";
 import { PageWrapper, Table } from "@components";
-import { moviesPageName } from "@constants";
+import { DEFAULT_PAGE_SIZE, FIRST_PAGE, moviesPageName } from "@constants";
 import { Typography } from "@mui/material";
 import type { ITableColumn } from "@types";
 import { useCallback, useMemo, useState } from "react";
@@ -12,11 +12,17 @@ interface IFilter {
 
 export const Movies = () => {
   const [filters, setFilters] = useState<IFilter>({ year: "", winner: "" });
-  const { data, isLoading, isError } = useGetListMovies({
-    page: 0,
-    size: 999,
-    ...filters,
+  const [pagination, setPagination] = useState({
+    page: FIRST_PAGE,
+    size: DEFAULT_PAGE_SIZE,
   });
+
+  const { data, isLoading, isError } = useGetListMovies({
+    ...filters,
+    page: Math.max(pagination.page - 1, 0),
+    size: pagination.size,
+  });
+  const showPagination = !isLoading && !isError && data?.content.length > 0;
 
   const columns: ITableColumn[] = useMemo(() => {
     const commonColumnProps: Partial<ITableColumn> = {
@@ -67,7 +73,12 @@ export const Movies = () => {
   }, []);
 
   const handleFilterChange = useCallback((value: IFilter) => {
+    setPagination((prev) => ({ ...prev, page: FIRST_PAGE }));
     setFilters((prev) => ({ ...prev, ...value }));
+  }, []);
+
+  const handlePageChange = useCallback((page: number, size: number) => {
+    setPagination((prev) => ({ ...prev, page, size }));
   }, []);
 
   return (
@@ -83,6 +94,11 @@ export const Movies = () => {
         onFilterChange={(value) =>
           handleFilterChange(value as unknown as IFilter)
         }
+        showPagination={showPagination}
+        page={pagination.page}
+        pageSize={pagination.size}
+        count={data?.totalPages ?? 0}
+        onPageChange={handlePageChange}
       />
     </PageWrapper>
   );

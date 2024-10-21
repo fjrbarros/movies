@@ -143,12 +143,6 @@ describe("Movies", () => {
       charCode: 13,
     });
 
-    await waitFor(() => {
-      expect(mockUseGetListMovies).toHaveBeenCalledWith(
-        expect.objectContaining({ page: 0, size: 999, winner: "", year: "" }),
-      );
-    });
-
     const winnerFilterSelect = screen.getByLabelText("Yes/No");
     fireEvent.mouseDown(winnerFilterSelect);
     const listbox = screen.getByRole("listbox");
