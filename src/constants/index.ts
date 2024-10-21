@@ -31,3 +31,7 @@ export const DEFAULT_LOADING_MESSAGE = "Loading data...";
 export const DEFAULT_ERROR_MESSAGE =
   "An error occurred while loading the data.";
 export const DEFAULT_EMPTY_MESSAGE = "There is no data to display.";
+
+export const FIRST_PAGE = 0;
+export const DEFAULT_PAGE_SIZE = 10;
+export const DEFAULT_ROWS_PER_PAGE = [DEFAULT_PAGE_SIZE, 20, 50];
