@@ -2,6 +2,9 @@ import {
   DEFAULT_EMPTY_MESSAGE,
   DEFAULT_ERROR_MESSAGE,
   DEFAULT_LOADING_MESSAGE,
+  DEFAULT_PAGE_SIZE,
+  DEFAULT_ROWS_PER_PAGE,
+  FIRST_PAGE,
 } from "@constants";
 import InfoIcon from "@mui/icons-material/Info";
 import ReportIcon from "@mui/icons-material/Report";
@@ -18,8 +21,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import type { ITableColumn, TInputType } from "@types";
-import { useState } from "react";
-import { StyledTableRow } from "./Table.styles";
+import { useCallback, useEffect, useState } from "react";
+import { Pagination } from "../pagination/Pagination";
+import { PaginationContainer, StyledTableRow } from "./Table.styles";
 import { InputFilter } from "./sub-components/InputFilters";
 import { NoDataWrapper } from "./sub-components/NoDataWrapper";
 
@@ -36,29 +40,59 @@ interface TableProps<T> {
   errorMessage?: string;
   emptyMessage?: string;
   sx?: SxProps<Theme>;
+  onPageChange?: (page: number, rowsPerPage: number) => void;
+  page?: number;
+  pageSize?: number;
+  rowsPerPageList?: number[];
+  count: number;
+  showPagination?: boolean;
 }
 
 export const Table = <T,>({
   columns,
   data,
   onFilterChange,
-  isLoading = false,
-  isError = false,
+  isLoading,
+  isError,
   loadingMessage = DEFAULT_LOADING_MESSAGE,
   errorMessage = DEFAULT_ERROR_MESSAGE,
   emptyMessage = DEFAULT_EMPTY_MESSAGE,
   sx,
+  page: pageProp = FIRST_PAGE,
+  pageSize = DEFAULT_PAGE_SIZE,
+  rowsPerPageList = DEFAULT_ROWS_PER_PAGE,
+  count,
+  onPageChange,
+  showPagination = false,
 }: TableProps<T>) => {
   const [filters, setFilters] = useState<{ [key: string]: string }>({});
+  const [page, setPage] = useState(pageProp);
+  const [rowsPerPage, setRowsPerPage] = useState(pageSize);
 
-  const handleFilterChange = (columnId: string, value: string) => {
-    const newFilters = {
-      ...filters,
-      [columnId]: value,
-    };
-    setFilters(newFilters);
-    onFilterChange?.(newFilters);
-  };
+  useEffect(() => {
+    onPageChange?.(page, rowsPerPage);
+  }, [page, rowsPerPage, onPageChange]);
+
+  const handleFilterChange = useCallback(
+    (columnId: string, value: string) => {
+      const newFilters = {
+        ...filters,
+        [columnId]: value,
+      };
+      setFilters(newFilters);
+      onFilterChange?.(newFilters);
+    },
+    [filters, onFilterChange],
+  );
+
+  const handlePageChange = useCallback((newPage: number) => {
+    setPage(newPage);
+  }, []);
+
+  const handleRowsPerPageChange = useCallback((newRowsPerPage: number) => {
+    setRowsPerPage(newRowsPerPage);
+    setPage(FIRST_PAGE);
+  }, []);
 
   const renderTableBody = () => {
     const colSpan = columns.length;
@@ -106,41 +140,55 @@ export const Table = <T,>({
   };
 
   return (
-    <TableContainer>
-      <MuiTable sx={sx}>
-        <TableHead sx={{ background: "#f9f9f9" }}>
-          <TableRow>
-            {columns.map((column) => (
-              <TableCell
-                key={column.id}
-                align={column.headerTextAlign || "left"}
-                sx={column.sx}
-              >
-                <Box display="flex" flexDirection="column">
-                  {column.label}
-                  {column.filter && (
-                    <InputFilter
-                      value={filters[column.id] ?? ""}
-                      onChange={(event) =>
-                        handleFilterChange(column.id, event as string)
-                      }
-                      label={column.filter.placeholder}
-                      variant="standard"
-                      size="medium"
-                      margin="dense"
-                      type={column.filter.type}
-                      options={column.filter.options}
-                      onClickClear={() => handleFilterChange(column.id, "")}
-                      triggerOnEnter={column.filter.triggerOnEnter}
-                    />
-                  )}
-                </Box>
-              </TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>{renderTableBody()}</TableBody>
-      </MuiTable>
-    </TableContainer>
+    <>
+      <TableContainer>
+        <MuiTable sx={sx}>
+          <TableHead sx={{ background: "#f9f9f9" }}>
+            <TableRow>
+              {columns.map((column) => (
+                <TableCell
+                  key={column.id}
+                  align={column.headerTextAlign || "left"}
+                  sx={column.sx}
+                >
+                  <Box display="flex" flexDirection="column">
+                    {column.label}
+                    {column.filter && (
+                      <InputFilter
+                        value={filters[column.id] ?? ""}
+                        onChange={(event) =>
+                          handleFilterChange(column.id, event as string)
+                        }
+                        label={column.filter.placeholder}
+                        variant="standard"
+                        size="medium"
+                        margin="dense"
+                        type={column.filter.type}
+                        options={column.filter.options}
+                        onClickClear={() => handleFilterChange(column.id, "")}
+                        triggerOnEnter={column.filter.triggerOnEnter}
+                      />
+                    )}
+                  </Box>
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>{renderTableBody()}</TableBody>
+        </MuiTable>
+      </TableContainer>
+      {showPagination && (
+        <PaginationContainer>
+          <Pagination
+            count={count}
+            page={page === 0 ? page + 1 : page}
+            rowsPerPage={rowsPerPage}
+            rowsPerPageOptions={rowsPerPageList}
+            onPageChange={handlePageChange}
+            onRowsPerPageChange={handleRowsPerPageChange}
+          />
+        </PaginationContainer>
+      )}
+    </>
   );
 };

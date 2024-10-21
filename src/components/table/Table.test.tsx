@@ -4,6 +4,7 @@ import {
   DEFAULT_LOADING_MESSAGE,
 } from "@constants";
 import {
+  act,
   fireEvent,
   render,
   screen,
@@ -61,7 +62,7 @@ const data = [
 
 describe("Table", () => {
   it("should render table headers correctly", () => {
-    render(<Table columns={columns} data={data} onFilterChange={() => {}} />);
+    renderComponent();
 
     for (const column of columns) {
       expect(screen.getByText(column.label)).toBeInTheDocument();
@@ -69,12 +70,12 @@ describe("Table", () => {
   });
 
   it("should render table data correctly", () => {
-    render(<Table columns={columns} data={data} onFilterChange={() => {}} />);
+    renderComponent();
 
     for (const row of data) {
       for (const column of columns) {
         const cellValue = row[column.id as keyof Data];
-        const cells = screen.getAllByText(cellValue);
+        const cells = screen.getAllByText(String(cellValue));
 
         const cell = cells.find((c) =>
           c.closest("tr")?.contains(screen.getByText(row.name)),
@@ -86,41 +87,19 @@ describe("Table", () => {
   });
 
   it("should display loading message when isLoading is true", () => {
-    render(
-      <Table
-        columns={columns}
-        data={[]}
-        onFilterChange={() => {}}
-        isLoading={true}
-      />,
-    );
+    renderComponent({ isLoading: true });
 
     expect(screen.getByText(DEFAULT_LOADING_MESSAGE)).toBeInTheDocument();
   });
 
   it("should display empty message when there is no data", () => {
-    render(
-      <Table
-        columns={columns}
-        data={[]}
-        onFilterChange={() => {}}
-        isLoading={false}
-      />,
-    );
+    renderComponent({ data: [] });
 
     expect(screen.getByText(DEFAULT_EMPTY_MESSAGE)).toBeInTheDocument();
   });
 
   it("should display error message when isError is true", () => {
-    render(
-      <Table
-        columns={columns}
-        data={[]}
-        onFilterChange={() => {}}
-        isLoading={false}
-        isError={true}
-      />,
-    );
+    renderComponent({ isError: true });
 
     expect(screen.getByText(DEFAULT_ERROR_MESSAGE)).toBeInTheDocument();
   });
@@ -128,13 +107,7 @@ describe("Table", () => {
   it("should call onFilterChange when filter value changes with debounce", async () => {
     const mockOnFilterChange = jest.fn();
 
-    render(
-      <Table
-        columns={columns}
-        data={data}
-        onFilterChange={mockOnFilterChange}
-      />,
-    );
+    renderComponent({ onFilterChange: mockOnFilterChange });
 
     const filterInput = screen.getByLabelText("Filter by name");
     fireEvent.change(filterInput, { target: { value: "Ice" } });
@@ -147,13 +120,7 @@ describe("Table", () => {
   it("should call onFilterChange when Enter is pressed", () => {
     const mockOnFilterChange = jest.fn();
 
-    render(
-      <Table
-        columns={columns}
-        data={data}
-        onFilterChange={mockOnFilterChange}
-      />,
-    );
+    renderComponent({ onFilterChange: mockOnFilterChange });
 
     const filterInput = screen.getByLabelText("Filter by calories");
     fireEvent.change(filterInput, { target: { value: "calories" } });
@@ -169,13 +136,10 @@ describe("Table", () => {
   it('should clear filter value when "clear" button is clicked', () => {
     const mockOnFilterChange = jest.fn();
 
-    render(
-      <Table
-        columns={[columns[0]]}
-        data={data}
-        onFilterChange={mockOnFilterChange}
-      />,
-    );
+    renderComponent({
+      columns: [columns[0]],
+      onFilterChange: mockOnFilterChange,
+    });
 
     const filterInput = screen.getByLabelText("Filter by name");
     fireEvent.change(filterInput, { target: { value: "Ice" } });
@@ -204,13 +168,10 @@ describe("Table", () => {
       },
     ];
 
-    render(
-      <Table
-        columns={selectColumns}
-        data={data}
-        onFilterChange={mockOnFilterChange}
-      />,
-    );
+    renderComponent({
+      columns: selectColumns,
+      onFilterChange: mockOnFilterChange,
+    });
 
     const selectInput = screen.getByLabelText("Filter by category");
     fireEvent.mouseDown(selectInput);
@@ -241,4 +202,58 @@ describe("Table", () => {
 
     expect(mockOnChange).not.toHaveBeenCalled();
   });
+
+  it("should call onPageChange when pagination is used", () => {
+    const mockOnPageChange = jest.fn();
+
+    renderComponent({
+      onPageChange: mockOnPageChange,
+      showPagination: true,
+      page: 1,
+      pageSize: 10,
+      rowsPerPageList: [10, 20, 30],
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: "Go to page 2" }));
+    expect(mockOnPageChange).toHaveBeenCalledWith(2, 10);
+  });
+
+  it("should call onPageChange when onRowsPerPageChange is called", () => {
+    const mockOnPageChange = jest.fn();
+
+    renderComponent({
+      onPageChange: mockOnPageChange,
+      showPagination: true,
+      page: 1,
+      pageSize: 10,
+      rowsPerPageList: [10, 20, 30],
+    });
+
+    act(() => {
+      fireEvent.mouseDown(screen.getByText("10"));
+    });
+
+    const selectInput = screen.getByRole("listbox");
+
+    act(() => {
+      fireEvent.click(within(selectInput).getByText("20"));
+    });
+
+    expect(mockOnPageChange).toHaveBeenCalled();
+  });
 });
+
+const renderComponent = (props = {}) => {
+  const defaultProps = {
+    columns: columns,
+    data: data,
+    isLoading: false,
+    isError: false,
+    count: 100,
+    showPagination: false,
+    onFilterChange: () => {},
+    ...props,
+  };
+
+  return render(<Table {...defaultProps} />);
+};

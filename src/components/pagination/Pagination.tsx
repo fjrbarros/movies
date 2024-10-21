@@ -8,6 +8,7 @@ import {
   type SelectChangeEvent,
   Typography,
 } from "@mui/material";
+import { useCallback } from "react";
 import { PaginationWrapper } from "./Pagination.styles";
 
 interface IPaginationProps extends PaginationProps {
@@ -27,14 +28,20 @@ export const Pagination = ({
   onPageChange,
   onRowsPerPageChange,
 }: IPaginationProps) => {
-  const handlePageChange = (_: React.ChangeEvent<unknown>, value: number) => {
-    onPageChange(value);
-  };
+  const handlePageChange = useCallback(
+    (_: React.ChangeEvent<unknown>, value: number) => {
+      onPageChange(value);
+    },
+    [onPageChange],
+  );
 
-  const handleRowsPerPageChange = (event: SelectChangeEvent) => {
-    const newRowsPerPage = Number.parseInt(event.target.value, 10);
-    onRowsPerPageChange(newRowsPerPage);
-  };
+  const handleRowsPerPageChange = useCallback(
+    (event: SelectChangeEvent) => {
+      const newRowsPerPage = Number.parseInt(event.target.value, 10);
+      onRowsPerPageChange(newRowsPerPage);
+    },
+    [onRowsPerPageChange],
+  );
 
   return (
     <PaginationWrapper>
