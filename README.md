@@ -1,50 +1,71 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Movies
 
-Currently, two official plugins are available:
+This is a ReactJS project with three main pages: Home, Movies, and Not Found. The project is published and you can access it 
+[Documentation](https://linktodocumentation).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
+## Documentation
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+ - [Tools Used](#tools-used)
+ - [Pages and Features](#pages-and-features)
+    - [Home](#home)
+    - [Movies](#movies)
+    - [Not Found](#not-found)
+ - [How to Run the Project](#how-to-run-the-project)
+ - [Test Coverage](#test-coverage)
+ - [Responsiveness](#responsiveness)
 
-- Configure the top-level `parserOptions` property like this:
+## Tools used
+| Tool          | Specifically |
+| ------------- | ------------- |
+| @mui/material  | Components - UI  |
+| @tanstack/react-query  | Monitor requests |
+| react-router-dom | Route manipulation |
+| @biomejs/biome | Code formatter |
+| @biomejs/biome and Jest | Test code |
+| asfdasd | asdfasdf |
+| asfdasd | asdfasdf |
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Pages and Features
+
+#### Home
+
+The Home page consists of four cards, each containing a table that renders data from an API. Each card is independent and has its own loading, error, and empty states.
+
+#### Movies
+
+The Movies page contains a table that lists data from an API. This page has loading, error, and empty states, as well as pagination and filters on two columns: year and winner (yes/no).
+
+#### Not Found
+
+The Not Found page displays a message indicating that the page was not found and a button that redirects to the Home page.
+
+
+
+## How to Run the Project
+
+PS: You need to have the [Nodejs](https://nodejs.org/en) library and the [Yarn](https://yarnpkg.com/) package manager installed.
+
+
+Clone the repository
+
+```bash
+https://github.com/fjrbarros/movies.git
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+install dependencies
+```bash
+yarn install
 ```
+
+execute the project
+```bash
+yarn dev
+```
+
+## Test Coverage
+The project has 100% test coverage, ensuring the quality and reliability of the code.
+
+## Responsiveness
+The project is fully responsive, providing a good user experience on different devices and screen sizes.
